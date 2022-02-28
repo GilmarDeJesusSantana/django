@@ -3,7 +3,11 @@ from datetime import datetime
 
 
 # Create your models here.
+from pessoas.models import Pessoa
+
+
 class Receita(models.Model):
+    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
     nome_receita = models.CharField(max_length=200)
     ingredientes = models.TextField()
     modo_preparo = models.TextField()
@@ -11,3 +15,4 @@ class Receita(models.Model):
     rendimento = models.CharField(max_length=100)
     categoria = models.CharField(max_length=100)
     date_receita = models.DateTimeField(default=datetime.now, blank=True)
+    publicado = models.BooleanField(default=False)
