@@ -20,7 +20,7 @@ def cadastro(request):
         if User.objects.filter(email=email).exists():
             print('Usuário já cadastrado')
             return redirect('cadastro')
-        user =User.objects.create_user(username=nome, email=email,password=senha)
+        user = User.objects.create_user(username=nome, email=email, password=senha)
         user.save
         print('Usuário cadastrado com sucesso.')
         return redirect('login')
@@ -29,6 +29,13 @@ def cadastro(request):
 
 
 def login(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        senha = request.POST['senha']
+        if email == '' or senha == '':
+            return redirect('login')
+        print(email, senha)
+        return redirect('dashboard')
     return render(request, 'usuarios/login.html')
 
 
@@ -37,4 +44,4 @@ def logout(request):
 
 
 def dashboard(request):
-    pass
+    return render(request, 'usuarios/dashboard.html')
