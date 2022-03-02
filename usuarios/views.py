@@ -76,24 +76,31 @@ def cria_receita(request):
         categoria = request.POST['categoria']
         foto_receita = request.FILES['foto_receita']
         user = get_object_or_404(User, pk=request.user.id)
-        receita = Receita.object.create(pessoa=user,
-                                        nome_receita=nome_receita,
-                                        ingredientes=ingredientes,
-                                        modo_preparo=modo_preparo,
-                                        tempo_preparo=tempo_preparo,
-                                        rendimento=rendimento,
-                                        categoria=categoria,
-                                        foto_receita=foto_receita)
+        receita = Receita.objects.create(pessoa=user,
+                                         nome_receita=nome_receita,
+                                         ingredientes=ingredientes,
+                                         modo_preparo=modo_preparo,
+                                         tempo_preparo=tempo_preparo,
+                                         rendimento=rendimento,
+                                         categoria=categoria,
+                                         foto_receita=foto_receita)
         receita.save()
         return redirect('dashboard')
     else:
         return render(request, 'usuarios/cria_receita.html')
 
 
+def edita_receita(request, receita_id):
+    receita = get_object_or_404(Receita, pk=receita_id)
+    receita_a_editar = {'receita': receita}
+    return render(request, 'usuarios/edita_receita.html', receita_a_editar)
+
+
 def deleta_receita(request, receita_id):
     receita = get_object_or_404(Receita, pk=receita_id)
     receita.delete()
     return redirect('dashboard')
+
 
 def campo_vazio(campo):
     return not campo.strip()
