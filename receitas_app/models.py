@@ -1,13 +1,10 @@
 from django.db import models
 from datetime import datetime
-
-
-# Create your models here.
-from pessoas.models import Pessoa
+from django.contrib.auth.models import User
 
 
 class Receita(models.Model):
-    pessoa = models.ForeignKey(Pessoa, on_delete=models.CASCADE)
+    pessoa = models.ForeignKey(User, on_delete=models.CASCADE)
     nome_receita = models.CharField(max_length=200)
     ingredientes = models.TextField()
     modo_preparo = models.TextField()
@@ -17,5 +14,6 @@ class Receita(models.Model):
     date_receita = models.DateTimeField(default=datetime.now, blank=True)
     foto_receita = models.ImageField(upload_to='fotos/%d/%m/%Y', blank=True)
     publicado = models.BooleanField(default=False)
+
     def __str__(self):
         return self.nome_receita
