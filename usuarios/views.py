@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.shortcuts import render, redirect, get_object_or_404
 from receitas_app.models import Receita
 
@@ -17,14 +17,14 @@ def cadastro(request):
             print('O campo email não pode ser em branco')
             return redirect('cadastro')
         if senha != senha2:
-            print('As senhas informadas são diferentes.')
+            messages.error(request, 'As senha são diferentes.')
             return redirect('cadastro')
         if User.objects.filter(email=email).exists():
             print('Usuário já cadastrado')
             return redirect('cadastro')
         user = User.objects.create_user(username=nome, email=email, password=senha)
         user.save
-        print('Usuário cadastrado com sucesso.')
+        messages.success(request, 'Cadastro criado com sucesso.')
         return redirect('login')
     else:
         return render(request, 'usuarios/cadastro.html')
@@ -42,7 +42,6 @@ def login(request):
             user = auth.authenticate(request, username=nome, password=senha)
             if user is not None:
                 auth.login(request, user)
-                print('Login realizado com sucesso!!')
                 return redirect('dashboard')
     return render(request, 'usuarios/login.html')
 
