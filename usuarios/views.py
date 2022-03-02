@@ -101,6 +101,20 @@ def deleta_receita(request, receita_id):
     receita.delete()
     return redirect('dashboard')
 
+def atualiza_receita(request):
+    if request.method == 'POST':
+        receita_id = request.POST['receita_id']
+        receita_em_edicao = Receita.objects.get(pk=receita_id)
+        receita_em_edicao.nome_receita = request.POST['nome_receita']
+        receita_em_edicao.ingredientes = request.POST['ingredientes']
+        receita_em_edicao.modo_preparo = request.POST['modo_preparo']
+        receita_em_edicao.tempo_preparo = request.POST['tempo_preparo']
+        receita_em_edicao.rendimento = request.POST['rendimento']
+        receita_em_edicao.categoria = request.POST['categoria']
+        if 'foto_receita' in request.FILES:
+            receita_em_edicao.foto_receita = request.FILES['foto_receita']
+        receita_em_edicao.save()
+        return redirect('dashboard')
 
 def campo_vazio(campo):
     return not campo.strip()
