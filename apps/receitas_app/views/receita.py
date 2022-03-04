@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
-from receitas_app.models import Receita
+from apps.receitas_app.models import Receita
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 

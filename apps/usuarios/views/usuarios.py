@@ -1,10 +1,14 @@
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect
-from receitas_app.models import Receita
+from apps.receitas_app.models import Receita
 
 
 def cadastro(request):
+    """
+    Cadastra usuarios no sistema
+    :param request: request
+    """
     if request.method == 'POST':
         nome = request.POST['nome']
         email = request.POST['email']
@@ -34,6 +38,10 @@ def cadastro(request):
 
 
 def login(request):
+    """
+    Faz login e autenticação do usuário.
+    :param request: request
+    """
     if request.method == 'POST':
         email = request.POST['email']
         senha = request.POST['senha']
